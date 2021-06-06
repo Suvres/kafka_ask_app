@@ -16,16 +16,16 @@ a także zbudować poszczególne obrazy i skonfigurować `docker-compose.yml`, d
 
 ---
 
-Oba skrypty zawierają kilka parametrów:
+Oba skrypty zawierają kilka parametrów:  
 ./client.sh
  - [TOPIC] -  nazwa tematu z którego odbieramy dane z kafki
  - i=[ip_addr] - adres ip kafki
  - p=[port] - port kafki
  - m=[ip_addr] - adres ip serwera mysql
 Przykład: ./client.sh ask-topic i=172.17.1.55 m=172.17.1.54
-
+  
 ---
-
+  
 ./server.sh
  - [TOPIC] - temat na jaki wysyłamy wiadomość do kafki
  - i=[ip_addr] - adres ip kafki
