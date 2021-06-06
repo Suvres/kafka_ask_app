@@ -1,0 +1,6 @@
+client_docker/kafka/logs/*
+server_docker/kafka/logs/*
+
+
+./client_docker/kafka/logs/*
+./server_docker/kafka/logs/*

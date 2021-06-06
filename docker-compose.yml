@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+    client:
+        image: "kafka-client:dev"
+        depends_on:
+            - kafka-broker
+        stdin_open: true
+        tty: true
+    server:
+        image: "kafka-server:dev"
+        depends_on:
+            - kafka-broker
+        stdin_open: true
+        tty: true
+    db:
+        image: "kafka-db:dev"
+        ports:
+            - "3306:3306"
+        volumes:
+            - /var/lib/mysql
+        depends_on:
+            - kafka-broker
+        env_file:
+            - ./db_docker/.env
+        networks:
+            default:
+                ipv4_address: 172.17.1.54
+    zookeeper:
+        image: confluentinc/cp-zookeeper:6.1.1
+        hostname: zookeeper
+        container_name: zookeeper
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+    kafka-broker:
+        image: confluentinc/cp-kafka:6.1.1
+        hostname: broker
+        container_name: broker
+        depends_on:
+            - zookeeper
+        ports:
+        - "29092:29092"
+        environment:
+            KAFKA_BROKER_ID: 101
+            KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://localhost:29092
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+        networks:
+            default:
+                ipv4_address: 172.17.1.55
+
+networks:
+    default:
+        external: true
+        name: kafka
