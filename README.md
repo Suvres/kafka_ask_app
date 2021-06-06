@@ -21,7 +21,7 @@ Oba skrypty zawierają kilka parametrów:
  - [TOPIC] -  nazwa tematu z którego odbieramy dane z kafki
  - i=[ip_addr] - adres ip kafki
  - p=[port] - port kafki
- - m=[ip_addr] - adres ip serwera mysql
+ - m=[ip_addr] - adres ip serwera mysql  
 Przykład: ./client.sh ask-topic i=172.17.1.55 m=172.17.1.54
   
 ---
@@ -29,5 +29,27 @@ Przykład: ./client.sh ask-topic i=172.17.1.55 m=172.17.1.54
 ./server.sh
  - [TOPIC] - temat na jaki wysyłamy wiadomość do kafki
  - i=[ip_addr] - adres ip kafki
- - p=[port] - port kafki
+ - p=[port] - port kafki  
 Przykład: ./server.sh ask-topic i=172.17.1.55
+
+---
+
+należy ręcznie uruchomić podane skrypty, gdyż bez działającej kafki, program nie będzie działał. Można to zrobić poprzez
+```sh
+
+docker exec -it <obraz> bash
+
+```
+Domyślne polecenie uruchamiające klienta w obrazie  
+```sh
+
+./client.sh ask-topic i=172.17.1.55 m=172.17.1.54
+
+```
+
+Domyślne polecenie uruchamiające serwer w obrazie  
+```sh
+
+./client.sh ask-topic i=172.17.1.55
+
+```
